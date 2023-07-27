@@ -17,14 +17,17 @@ export default function App() {
     [T, always("Next player: " + (xIsNext ? "X" : "O"))],
   ])();
 
-  const handlePlay = (nextSquares) => {
+  const handlePlay = (index) => {
+    if (winner || currentSquares[index]) {
+      return;
+    }
+    const nextSquares = currentSquares.slice();
+    nextSquares[index] = xIsNext ? "X" : "O";
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   };
-  const jumpTo = (nextMove) => {
-    setCurrentMove(nextMove);
-  };
+
   return (
     <div className="flex p-9">
       <div className="w-1/2">
@@ -32,13 +35,13 @@ export default function App() {
         <Board
           squares={currentSquares}
           xIsNext={xIsNext}
-          onPlay={handlePlay}
+          handleClick={handlePlay}
           winner={winner}
           lines={lines}
         />
       </div>
       <div className="w-1/2">
-        <GameInfo history={history} jumpTo={jumpTo} />
+        <GameInfo history={history} jumpTo={setCurrentMove} />
       </div>
     </div>
   );
