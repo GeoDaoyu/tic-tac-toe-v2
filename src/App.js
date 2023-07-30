@@ -1,11 +1,11 @@
+import { T, all, always, cond, isNotNil } from "ramda";
 import { useState } from "react";
-import StatusBar from "./pages/StatusBar";
+import { calculateWinner } from "./help";
 import Board from "./pages/Board";
 import GameInfo from "./pages/GameInfo";
-import { calculateWinner } from "./help";
-import { isNotNil, all, always, cond, T } from "ramda";
+import StatusBar from "./pages/StatusBar";
 
-export default function App() {
+const App = () => {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const xIsNext = currentMove % 2 === 0;
@@ -45,4 +45,5 @@ export default function App() {
       </div>
     </div>
   );
-}
+};
+export default App;
